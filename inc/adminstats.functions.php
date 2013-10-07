@@ -75,6 +75,6 @@ function item_counter($type, $days = 1, $str = '')
 	}
 	if ($db_table && $db_column)
 	{		$counter = $db->query("SELECT COUNT(*) FROM ".$db_table." WHERE ".$db_column." >= ".$time." AND ".$db_column." <= ".$sys['now'])->fetchColumn();
-		if (empty($str)) return $counter;
-		else return cot_declension($counter, $str/*, $onlyword = false, $canfrac = true*/);	}
+		if (!isset($L[$str]) && empty($L[$str])) return $counter;
+		else return cot_declension($counter, $L[$str]/*, $onlyword = false, $canfrac = true*/);	}
 	else return sprintf($L['adminstats_error_type_disabled'], $type);}
