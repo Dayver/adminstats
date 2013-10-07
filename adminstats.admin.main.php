@@ -6,15 +6,15 @@ Hooks=admin.main
 ==================== */
 (defined('COT_CODE') && defined('COT_ADMIN')) or die('Wrong URL.');
 
+require_once cot_langfile('adminstats', 'plug');
+require_once cot_incfile('adminstats', 'plug');
+
 if ($cache && (int) $cfg['plugin']['adminstats']['cache_ttl'] > 0)
 {
 	$adminstats = $cache->disk->get('adminstats_info', 'adminstats', (int)$cfg['plugin']['adminstats']['cache_ttl']);
 }
 if (empty($adminstats))
 {
-	require_once cot_langfile('adminstats', 'plug');
-	require_once cot_incfile('adminstats', 'plug');
-
 	$default_theme_titles = $cfg['defaulttheme'];
 	$default_scheme_titles = $L['Default'];
 	$themeinfo = "{$cfg['themes_dir']}/{$cfg['defaulttheme']}/{$cfg['defaulttheme']}.php";
