@@ -6,8 +6,8 @@ Hooks=admin.main
 ==================== */
 (defined('COT_CODE') && defined('COT_ADMIN')) or die('Wrong URL.');
 
-require_once cot_langfile('adminstat', 'plug');
-require_once cot_incfile('adminstat', 'plug');
+require_once cot_langfile('adminstats', 'plug');
+require_once cot_incfile('adminstats', 'plug');
 
 $default_theme_titles = $cfg['defaulttheme'];
 $default_scheme_titles = $L['Default'];
@@ -53,157 +53,157 @@ foreach ($sql->fetchAll(PDO::FETCH_NUM) as $row)
 }
 if (!$cot_countries) include_once cot_langfile('countries', 'core');
 $extensions = cot_extension_list_info($cfg['modules_dir']);
-$adminstat = array(
+$adminstats = array(
 	'version' => array(
-		'title' => $L['adminstat_cot_version'],
+		'title' => $L['adminstats_cot_version'],
 		'value' => $cfg['version']
 	),
 	'defaulttheme' => array(
-		'title' => $L['adminstat_cot_defaulttheme'],
+		'title' => $L['adminstats_cot_defaulttheme'],
 		'value' => $default_theme_titles
 	),
 	'defaultscheme' => array(
-		'title' => $L['adminstat_cot_defaultscheme'],
+		'title' => $L['adminstats_cot_defaultscheme'],
 		'value' => $default_scheme_titles
 	),
 	'defaulticons' => array(
-		'title' => $L['adminstat_cot_defaulticons'],
+		'title' => $L['adminstats_cot_defaulticons'],
 		'value' => $cfg['defaulticons'] == 'default' ? $L['Default'] : $cfg['defaulticons']
 	),
 	'defaultlang' => array(
-		'title' => $L['adminstat_cot_defaultlang'],
+		'title' => $L['adminstats_cot_defaultlang'],
 		'value' => $cot_languages[$cfg['defaultlang']]." (".$cfg['defaultlang'].")"//$cot_countries[]
 	),
 	'admintheme' => array(
-		'title' => $L['adminstat_cot_admintheme'],
+		'title' => $L['adminstats_cot_admintheme'],
 		'value' => empty($cfg['admintheme']) ? $L['Default'] : $cfg['admintheme']
 	),
 	'cache' => array(
-		'title' => $L['adminstat_cot_cache'],
+		'title' => $L['adminstats_cot_cache'],
 		'value' => $cfg['cache'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'cache_drv' => array(
-		'title' => $L['adminstat_cot_cache_drv'],
-		'value' => $cfg['cache_drv'] == '_driver' ? $L['adminstat_cot_cache_drv_Empty'] : $cfg['cache_drv']
+		'title' => $L['adminstats_cot_cache_drv'],
+		'value' => $cfg['cache_drv'] == '_driver' ? $L['adminstats_cot_cache_drv_Empty'] : $cfg['cache_drv']
 	),
 	'xtpl_cache' => array(
-		'title' => $L['adminstat_cot_xtpl_cache'],
+		'title' => $L['adminstats_cot_xtpl_cache'],
 		'value' => $cfg['xtpl_cache'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'html_cleanup' => array(
-		'title' => $L['adminstat_cot_html_cleanup'],
+		'title' => $L['adminstats_cot_html_cleanup'],
 		'value' => $cfg['html_cleanup'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'cache_index' => array(
-		'title' => $L['adminstat_cot_cache_index'],
+		'title' => $L['adminstats_cot_cache_index'],
 		'value' => $cfg['cache_index'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'cache_page' => array(
-		'title' => $L['adminstat_cot_cache_page'],
+		'title' => $L['adminstats_cot_cache_page'],
 		'value' => $cfg['cache_page'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'cache_forums' => array(
-		'title' => $L['adminstat_cot_cache_forums'],
+		'title' => $L['adminstats_cot_cache_forums'],
 		'value' => $cfg['cache_forums'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'check_updates' => array(
-		'title' => $L['adminstat_cot_check_updates'],
+		'title' => $L['adminstats_cot_check_updates'],
 		'value' => $cfg['check_updates'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'display_errors' => array(
-		'title' => $L['adminstat_cot_display_errors'],
+		'title' => $L['adminstats_cot_display_errors'],
 		'value' => $cfg['display_errors'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'ipcheck' => array(
-		'title' => $L['adminstat_cot_ipcheck'],
+		'title' => $L['adminstats_cot_ipcheck'],
 		'value' => $cfg['ipcheck'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'authcache' => array(
-		'title' => $L['adminstat_cot_authcache'],
+		'title' => $L['adminstats_cot_authcache'],
 		'value' => $cfg['authcache'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'useremailduplicate' => array(
-		'title' => $L['adminstat_cot_useremailduplicate'],
+		'title' => $L['adminstats_cot_useremailduplicate'],
 		'value' => $cfg['useremailduplicate'] ? $L['Enabled'] : $L['Disabled']
 	),
 	'debug_mode' => array(
-		'title' => $L['adminstat_cot_debug_mode'],
+		'title' => $L['adminstats_cot_debug_mode'],
 		'value' => $cfg['debug_mode'] ? $L['Enabled'] : $L['Disabled']
 	),
 
 	'modules' => array(
-		'title' => $L['adminstat_modules'],
+		'title' => $L['adminstats_modules'],
 		'value' => count($extensions)//$db->query("SELECT DISTINCT(pl_code) FROM $db_plugins WHERE pl_module = 1 GROUP BY pl_code")->rowCount()
 	),
 	'active_modules' => array(
-		'title' => $L['adminstat_active_modules'],
+		'title' => $L['adminstats_active_modules'],
 		'value' => $db->query("SELECT DISTINCT(pl_code) FROM $db_plugins WHERE pl_active = 1 AND pl_module = 1 GROUP BY pl_code")->rowCount()
 	),
 	'plugins' => array(
-		'title' => $L['adminstat_plugins'],
+		'title' => $L['adminstats_plugins'],
 		'value' => $db->query("SELECT DISTINCT(pl_code) FROM $db_plugins WHERE 1 GROUP BY pl_code")->rowCount()
 	),
 	'active_plugins' => array(
-		'title' => $L['adminstat_active_plugins'],
+		'title' => $L['adminstats_active_plugins'],
 		'value' => $db->query("SELECT DISTINCT(pl_code) FROM $db_plugins WHERE pl_active = 1 AND pl_module = 0 GROUP BY pl_code")->rowCount()
 	),
 	'hooks' => array(
-		'title' => $L['adminstat_hooks'],
+		'title' => $L['adminstats_hooks'],
 		'value' => $db->query("SELECT COUNT(*) FROM $db_plugins")->fetchColumn()
 	),
 	'active_hooks' => array(
-		'title' => $L['adminstat_active_hooks'],
+		'title' => $L['adminstats_active_hooks'],
 		'value' => $db->query("SELECT COUNT(*) FROM $db_plugins WHERE pl_active = 1")->fetchColumn()
 	),
 
 	'database' => array(
-		'title' => $L['adminstat_cot_database'],
+		'title' => $L['adminstats_cot_database'],
 		'value' => htmlspecialchars($db->query("SELECT upd_value FROM $db_updates WHERE upd_param = 'revision'")->fetchColumn())
 	),
 	'mysqlcharset' => array(
-		'title' => $L['adminstat_mysqlcharset'],
+		'title' => $L['adminstats_mysqlcharset'],
 		'value' => $cfg['mysqlcharset']
 	),
 
 	'db_counts' => array(
-		'title' => $L['adminstat_db_counts'],
+		'title' => $L['adminstats_db_counts'],
 		'value' => count($db_tables)
 	),
 	'db_rows' => array(
-		'title' => $L['adminstat_db_rows'],
+		'title' => $L['adminstats_db_rows'],
 		'value' => $db_total_rows
 	),
 	'db_indexsize' => array(
-		'title' => $L['adminstat_db_indexsize'],
+		'title' => $L['adminstats_db_indexsize'],
 		'value' => number_format(($db_total_index_length / 1024), 1, '.', ' ')
 	),
 	'db_datassize' => array(
-		'title' => $L['adminstat_db_datassize'],
+		'title' => $L['adminstats_db_datassize'],
 		'value' => number_format(($db_total_data_length / 1024), 1, '.', ' ')
 	),
 	'db_totalsize' => array(
-		'title' => $L['adminstat_db_totalsize'],
+		'title' => $L['adminstats_db_totalsize'],
 		'value' => number_format(($db_total_length / 1024), 1, '.', ' ')
 	),
 
 	'cot_db_counts' => array(
-		'title' => $L['adminstat_cot_db_counts'],
+		'title' => $L['adminstats_cot_db_counts'],
 		'value' => count($cot_db_tables)
 	),
 	'cot_db_rows' => array(
-		'title' => $L['adminstat_cot_db_rows'],
+		'title' => $L['adminstats_cot_db_rows'],
 		'value' => $cot_db_total_rows
 	),
 	'cot_db_indexsize' => array(
-		'title' => $L['adminstat_cot_db_indexsize'],
+		'title' => $L['adminstats_cot_db_indexsize'],
 		'value' => number_format(($cot_db_total_index_length / 1024), 1, '.', ' ')
 	),
 	'cot_db_datassize' => array(
-		'title' => $L['adminstat_cot_db_datassize'],
+		'title' => $L['adminstats_cot_db_datassize'],
 		'value' => number_format(($cot_db_total_data_length / 1024), 1, '.', ' ')
 	),
 	'cot_db_totalsize' => array(
-		'title' => $L['adminstat_cot_db_totalsize'],
+		'title' => $L['adminstats_cot_db_totalsize'],
 		'value' => number_format(($cot_db_total_length / 1024), 1, '.', ' ')
 	),
 );
@@ -235,12 +235,12 @@ if ($cfg['check_updates'] && $cache)
 			curl_close($curl);
 		}
 	}
-	$adminstat['new_ver'] = array(
-		'title' => $L['adminstat_new_ver'],
-		'value' => ($update_info['update_ver'] > $cfg['version']) ? sprintf($L['adminstat_update_revision'], $cfg['version'], htmlspecialchars($update_info['update_ver'])) : $L['adminstat_no_new_ver']
+	$adminstats['new_ver'] = array(
+		'title' => $L['adminstats_new_ver'],
+		'value' => ($update_info['update_ver'] > $cfg['version']) ? sprintf($L['adminstats_update_revision'], $cfg['version'], htmlspecialchars($update_info['update_ver'])) : $L['adminstats_no_new_ver']
 	);
-	$adminstat['new_ver_msg'] = array(
-		'title' => $L['adminstat_new_ver_msg'],
+	$adminstats['new_ver_msg'] = array(
+		'title' => $L['adminstats_new_ver_msg'],
 		'value' => ($update_info['update_ver'] > $cfg['version']) ? cot_parse($update_info['update_message']) : ''
 	);
 }

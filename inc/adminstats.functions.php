@@ -1,8 +1,8 @@
 <?php
 (defined('COT_CODE') && defined('COT_ADMIN')) or die('Wrong URL.');
 
-function item_counter($type, $days)
-{	global $db, $cfg, $L, $theme, $usr, $sys, $R, $structure, $cot_modules;//$cot_plugins_active
+function item_counter($type, $days = 1, $str = '')
+{	global $db, $cfg, $L, $lang, $Ls, $theme, $usr, $sys, $R, $structure, $cot_modules;//$cot_plugins_active
 
 	$time = $sys['now'] - $days * 86400;
 	$db_table = $db_column = '';
@@ -70,8 +70,11 @@ function item_counter($type, $days)
 			}
 		break;
 		default:
-			$L['adminstat_error_type_disabled'] = &$L['adminstat_error_type_wrong'];
+			$L['adminstats_error_type_disabled'] = &$L['adminstats_error_type_wrong'];
 		break;
 	}
-	if ($db_table && $db_column) return $db->query("SELECT COUNT(*) FROM ".$db_table." WHERE ".$db_column." >= ".$time." AND ".$db_column." <= ".$sys['now'])->fetchColumn();
-	else return sprintf($L['adminstat_error_type_disabled'], $type);}
+	if ($db_table && $db_column)
+	{		$counter = $db->query("SELECT COUNT(*) FROM ".$db_table." WHERE ".$db_column." >= ".$time." AND ".$db_column." <= ".$sys['now'])->fetchColumn();
+		if (empty($str)) return $counter;
+		else return cot_declension($counter, $str/*, $onlyword = false, $canfrac = true*/);	}
+	else return sprintf($L['adminstats_error_type_disabled'], $type);}
