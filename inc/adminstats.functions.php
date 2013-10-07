@@ -2,12 +2,14 @@
 (defined('COT_CODE') && defined('COT_ADMIN')) or die('Wrong URL.');
 
 function item_counter($type, $days = 1, $str = '')
-{	global $db, $cfg, $L, $lang, $Ls, $theme, $usr, $sys, $R, $structure, $cot_modules;//$cot_plugins_active
+{
+	global $db, $cfg, $L, $lang, $Ls, $theme, $usr, $sys, $R, $structure, $cot_modules;//$cot_plugins_active
 
 	$time = $sys['now'] - $days * 86400;
 	$db_table = $db_column = '';
 	switch ($type)
-	{		case 'contact':
+	{
+		case 'contact':
 			if (cot_plugin_active('contact'))
 			{
 				global $db_contact;
@@ -23,7 +25,8 @@ function item_counter($type, $days = 1, $str = '')
 				require_once cot_incfile('comments', 'plug');
 				$db_table = $db_com;
 				$db_column = 'com_date';
-			}		break;
+			}
+		break;
 		case 'polls':
 			if (cot_module_active('polls'))
 			{
@@ -55,7 +58,8 @@ function item_counter($type, $days = 1, $str = '')
 		case 'posts':
 		case 'topics':
 			if (cot_module_active('forums'))
-			{				global $db_forum_posts, $db_forum_topics;
+			{
+				global $db_forum_posts, $db_forum_topics;
 				require_once cot_incfile('forums', 'module');
 				$db_table = $type == 'posts' ? $db_forum_posts : $db_forum_topics;
 				$db_column = $type == 'posts' ? 'fp_creation' : 'ft_creationdate';//'fp_updated';
@@ -63,7 +67,8 @@ function item_counter($type, $days = 1, $str = '')
 		break;
 		case 'page':
 			if (cot_module_active('page'))
-			{				global $db_pages;
+			{
+				global $db_pages;
 				require_once cot_incfile('page', 'module');
 				$db_table = $db_pages;
 				$db_column = 'page_begin';//'page_date';
@@ -74,7 +79,10 @@ function item_counter($type, $days = 1, $str = '')
 		break;
 	}
 	if ($db_table && $db_column)
-	{		$counter = $db->query("SELECT COUNT(*) FROM ".$db_table." WHERE ".$db_column." >= ".$time." AND ".$db_column." <= ".$sys['now'])->fetchColumn();
-		if (empty($str)) return $counter;
-		else return cot_declension($counter, $str/*, $onlyword = false, $canfrac = true*/);	}
-	else return sprintf($L['adminstats_error_type_disabled'], $type);}
+	{
+		$counter = $db->query("SELECT COUNT(*) FROM ".$db_table." WHERE ".$db_column." >= ".$time." AND ".$db_column." <= ".$sys['now'])->fetchColumn();
+		if (!isset($L[$str]) && empty($L[$str])) return $counter;
+		else return cot_declension($counter, $L[$str]/*, $onlyword = false, $canfrac = true*/);
+	}
+	else return sprintf($L['adminstats_error_type_disabled'], $type);
+}
