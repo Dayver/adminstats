@@ -6,7 +6,10 @@ Hooks=admin.main
 ==================== */
 (defined('COT_CODE') && defined('COT_ADMIN')) or die('Wrong URL.');
 
-$adminstats = $cache->disk->get('adminstats_info', 'adminstats', (int)$cfg['plugin']['adminstats']['cache_ttl']);
+if ($cache && (int) $cfg['plugin']['adminstats']['cache_ttl'] > 0)
+{
+	$adminstats = $cache->disk->get('adminstats_info', 'adminstats', (int)$cfg['plugin']['adminstats']['cache_ttl']);
+}
 if (empty($adminstats))
 {
 	require_once cot_langfile('adminstats', 'plug');
@@ -247,5 +250,8 @@ if (empty($adminstats))
 			'value' => ($update_info['update_ver'] > $cfg['version']) ? cot_parse($update_info['update_message']) : ''
 		);
 	}
-	$cache->disk->store('adminstats_info', $adminstats, 'adminstats');
+	if ($cache && (int) $cfg['plugin']['adminstats']['cache_ttl'] > 0)
+	{
+		$cache->disk->store('adminstats_info', $adminstats, 'adminstats');
+	}
 }
