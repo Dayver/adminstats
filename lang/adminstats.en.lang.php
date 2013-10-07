@@ -6,7 +6,7 @@ defined('COT_CODE') or die('Wrong URL');
  */
 
 //$L['adminstats'] = '';
-//$L['info_desc'] = '';
+$L['info_desc'] = 'Detailed statistics available in any admin template';
 
 /**
  * Plugin Config
